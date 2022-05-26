@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #ileWyszlo {
+            width: 300px;
+        }
+        .zegar {
+            border: 1px solid black;
+            width: 248px;
+            height: 130px;
+            margin-top: 20px;
+            margin-left: 20px;
+            text-align: center;
+            
+        }
+    </style>
+</head>
+<body onload="start(), start2()">
+    
+    <div class="kontener">
+        <label for="dzisData">Obecna data:</label>
+        <input type="text" id="dzisData" readonly>
+        <div class="wpisanieDaty">
+            <label for="podanaData">Podaj date:</label>
+            <input type="date" id="podanaData"><br>
+            <label for="dzienTygodnia">Dzień tygodnia:</label>
+            <input type="text" id="dzienTygodnia" readonly><br>
+            <button onclick="ileMinelo()" class="wieksza">kliknij mnie</button><br>
+            <label for="ileWyszlo">Mineło:</label>
+            <input type="text" id="ileWyszlo" readonly>
+        </div>
+        
+        <input type="text" id="ktoraGodzina" class="zegar" readonly></div>
+    
+
+    <script>
+        var dni = ['Niedziela', 'Poniedzialek', 'Wtorek', 'Sroda', 'Czwartek', 'Piatek', 'Sobota'];
+        let dzisiejszaData1 = new Date();
+          
+        let dzisiejszaData2 = dzisiejszaData1.getDate() + "." + (dzisiejszaData1.getMonth()+ 1) + "." + dzisiejszaData1.getFullYear() + " " +dzisiejszaData1.getHours() + ":" + dzisiejszaData1.getMinutes();
+        let dzien = 1000 * 60 * 60 * 24;
+        let godziny = 1000 * 60 * 60;
+        setInterval(function start2() {
+            dzisiejszaData1 = new Date();
+            dzisiejszaData1.setHours(dzisiejszaData1.getHours());
+            let godz = dzisiejszaData1.getHours();
+            let min = dzisiejszaData1.getMinutes();
+            let sek = dzisiejszaData1.getSeconds();
+            let es = godz + ":" + min + ":" + sek;
+            document.getElementById("ktoraGodzina").value = es; 
+        }, 1000);
+
+        function start() {
+            document.getElementById("dzisData").value = dzisiejszaData2;
+            
+        }
+        function ileMinelo() {
+            let podanaData1 = new Date(document.getElementById("podanaData").value);
+            podanaData1.setHours(0,0,0,0);
+            let wynik1 = Math.abs(dzisiejszaData1 - podanaData1);
+            let wynik3 = wynik1;
+            wynik1 = Math.floor(wynik1 / dzien) ;
+            let wynik2 = Math.floor(wynik3 / godziny);
+            document.getElementById("dzienTygodnia").value = dni[podanaData1.getDay()];
+            
+            
+
+            document.getElementById("ileWyszlo").value = wynik1 + "dni i " + wynik2 + " godzin";
+            
+        }
+
+    </script>
+
+</body>
+</html>
